@@ -2,12 +2,15 @@ import { extendTheme } from "@chakra-ui/react";
 import "@fontsource/open-sans/300.css";
 import "@fontsource/open-sans/400.css";
 import "@fontsource/open-sans/700.css";
+import { Button } from "./button";
 
 export const theme = extendTheme({
   colors: {
     // Paleta de cores do Chakra UI
     brand: {
-      100: "#b02b2e",
+      100: "#FF3C00",
+      200: "#FF3C00",
+      300: "#FF3C00",
     },
   },
   fonts: {
@@ -21,6 +24,6 @@ export const theme = extendTheme({
     }),
   },
   components: {
-    // Button
+    Button,
   },
 });
