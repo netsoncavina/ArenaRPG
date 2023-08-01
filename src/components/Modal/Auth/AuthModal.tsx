@@ -1,4 +1,3 @@
-import { authModalState } from "@/src/atoms/AuthModalAtom";
 import {
   useDisclosure,
   Button,
@@ -16,6 +15,7 @@ import React from "react";
 import { useRecoilState } from "recoil";
 import AuthInputs from "./AuthInputs";
 import OAuthButtons from "./OAuthButtons";
+import { authModalState } from "@/src/atoms/authModalAtom";
 
 const AuthModal: React.FC = () => {
   const [modalState, setModalState] = useRecoilState(authModalState);
