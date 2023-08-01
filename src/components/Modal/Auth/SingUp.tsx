@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useSetRecoilState } from "recoil";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth } from "@/src/firebase/clientApp";
+import { FIREBASE_ERRORS } from "@/src/firebase/errors";
 
 const SingUp: React.FC = () => {
   const setAuthModalState = useSetRecoilState(authModalState);
@@ -92,11 +93,11 @@ const SingUp: React.FC = () => {
         }}
         bg="gray.50"
       />
-      {error && (
-        <Text textAlign="center" color="red.500" fontSize="10pt" mb={2}>
-          {error}
-        </Text>
-      )}
+      <Text textAlign="center" color="red.500" fontSize="10pt" mb={2}>
+        {error ||
+          FIREBASE_ERRORS[userError?.message as keyof typeof FIREBASE_ERRORS]}
+      </Text>
+
       <Button
         width="100%"
         height="36px"
