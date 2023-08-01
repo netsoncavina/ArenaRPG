@@ -7,6 +7,7 @@ import {
   Icon,
   Flex,
   MenuDivider,
+  Text,
 } from "@chakra-ui/react";
 import { User, signOut } from "firebase/auth";
 import { FaRedditSquare } from "react-icons/fa";
@@ -43,6 +44,21 @@ const UserMenu: React.FC<UserMenuProps> = ({ user }) => {
                   color="gray.300"
                   as={FaRedditSquare}
                 />
+                <Flex
+                  direction="column"
+                  display={{ base: "none", md: "flex" }}
+                  fontSize="8pt"
+                  align={"flex-start"}
+                  mr={8}
+                >
+                  <Text fontWeight={700}>
+                    {user?.displayName || user.email?.split("@")[0]}
+                  </Text>
+                  <Flex>
+                    <Icon as={IoSparkles} color="brand.100" mr={1} />
+                    <Text color="gray.400">1 Karma</Text>
+                  </Flex>
+                </Flex>
               </>
             ) : (
               <Icon as={VscAccount} fontSize={24} color="gray.400" mr={1} />
