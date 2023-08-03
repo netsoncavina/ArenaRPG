@@ -10,7 +10,7 @@ export interface Community {
   ImageUrl?: string;
 }
 
-interface CommunitySnippet {
+export interface CommunitySnippet {
   communityId: string;
   isModerator?: boolean;
   imageUrl?: string;
