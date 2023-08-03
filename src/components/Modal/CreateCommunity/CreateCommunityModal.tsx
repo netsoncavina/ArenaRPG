@@ -23,7 +23,13 @@ import {
 import { BsFillEyeFill, BsFillPersonFill } from "react-icons/bs";
 import { HiLockClosed } from "react-icons/hi";
 import { auth, firestore } from "@/src/firebase/clientApp";
-import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
+import {
+  doc,
+  getDoc,
+  runTransaction,
+  serverTimestamp,
+  setDoc,
+} from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 type CreateCommunityModalProps = {
@@ -70,20 +76,31 @@ const CreateCommunityModal: React.FC<CreateCommunityModalProps> = ({
     try {
       // Create community
       const communityDocRef = doc(firestore, "communities", communityName);
-      const communityDoc = await getDoc(communityDocRef);
 
-      // Check if community already exists
-      if (communityDoc.exists()) {
-        throw new Error(
-          `Desculpe, mas a comunidade c/${communityName} já existe. Tente outro nome.`
+      await runTransaction(firestore, async (transaction) => {
+        // Check if community already exists
+        const communityDoc = await transaction.get(communityDocRef);
+        if (communityDoc.exists()) {
+          throw new Error(
+            `Desculpe, mas a comunidade c/${communityName} já existe. Tente outro nome.`
+          );
+        }
+        // Create community
+        transaction.set(communityDocRef, {
+          creatorId: user?.uid,
+          createdAt: serverTimestamp(),
+          numberOfMembers: 1,
+          privacyType: communityType,
+        });
+
+        // Create communitySnippet on user
+        transaction.set(
+          doc(firestore, `users/${user?.uid}/communitySnippets`, communityName),
+          {
+            communityId: communityName,
+            isModerator: true,
+          }
         );
-      }
-
-      await setDoc(communityDocRef, {
-        creatorId: user?.uid,
-        createdAt: serverTimestamp(),
-        numberOfMembers: 1,
-        privacyType: communityType,
       });
     } catch (error: any) {
       console.error("handleCreateCommunity error: ", error);
