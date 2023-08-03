@@ -20,7 +20,7 @@ const Communities: React.FC<CommunitiesProps> = () => {
       >
         <Flex align="center">
           <Icon fontSize={20} mr={2} as={GrAdd} />
-          Create Community
+          Criar Comunidade
         </Flex>
       </MenuItem>
     </>
