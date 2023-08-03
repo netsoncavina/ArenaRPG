@@ -54,27 +54,24 @@ const useCommunityData = () => {
     setLoading(false);
   };
 
-  const joinCommunity = async (communityData: Community) => {
+  const joinCommunity = async (community: Community) => {
     try {
       // Batch write
       const batch = writeBatch(firestore);
+
       const newSnippet: CommunitySnippet = {
-        communityId: communityData.id,
-        imageUrl: communityData.ImageUrl || "",
+        communityId: community.id,
+        imageUrl: community.ImageUrl || "",
       };
 
       // Creating a new community snippet
       batch.set(
-        doc(
-          firestore,
-          `users/${user?.uid}/communitySnippets`,
-          communityData.id
-        ),
+        doc(firestore, `users/${user?.uid}/communitySnippets`, community.id),
         newSnippet
       );
 
       // Updating the number of members (+1)
-      batch.update(doc(firestore, "communities", communityData.id), {
+      batch.update(doc(firestore, "communities", community.id), {
         numberOfMembers: increment(1),
       });
 
@@ -91,11 +88,35 @@ const useCommunityData = () => {
     }
     setLoading(false);
   };
-  const leaveCommunity = (communityId: string) => {
-    // Batch write
-    // Creating a new community snippet
-    // Updating the number of members (+1)
-    // Update recoil state - communityState.mySnippets
+  const leaveCommunity = async (communityId: string) => {
+    try {
+      // Batch write
+      const batch = writeBatch(firestore);
+
+      // Deleting the community snippet
+      batch.delete(
+        doc(firestore, `users/${user?.uid}/communitySnippets`, communityId)
+      );
+
+      // Updating the number of members (+1)
+      batch.update(doc(firestore, "communities", communityId), {
+        numberOfMembers: increment(-1),
+      });
+
+      await batch.commit();
+
+      // Update recoil state - communityState.mySnippets
+      setCommunityStateValue((prevState) => ({
+        ...prevState,
+        mySnippets: prevState.mySnippets.filter(
+          (item) => item.communityId !== communityId
+        ),
+      }));
+    } catch (error: any) {
+      console.log("leaveCommunity error", error);
+      setError(error.message);
+    }
+    setLoading(false);
   };
 
   useEffect(() => {
