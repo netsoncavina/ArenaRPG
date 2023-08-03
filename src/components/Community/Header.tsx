@@ -2,13 +2,18 @@ import { Community } from "@/src/atoms/communitiesAtom";
 import { Box, Flex, Icon, Image, Text, Button } from "@chakra-ui/react";
 import React from "react";
 import { FaReddit } from "react-icons/fa";
+import useCommunityData from "@/src/hooks/useCommunityData";
 
 type HeaderProps = {
   communityData: Community;
 };
 
 const Header: React.FC<HeaderProps> = ({ communityData }) => {
-  const [isJoined, setIsJoined] = React.useState(false);
+  const { communityStateValue, onJoinOrLeaveCommunity, loading } =
+    useCommunityData();
+  const isJoined = !!communityStateValue.mySnippets.find(
+    (item) => item.communityId === communityData.id
+  );
   return (
     <Flex direction="column" width="100%" height="146px">
       <Box height="50%" bg="blue.400" />
@@ -42,8 +47,9 @@ const Header: React.FC<HeaderProps> = ({ communityData }) => {
               pr={6}
               pl={6}
               onClick={() => {
-                setIsJoined(!isJoined);
+                onJoinOrLeaveCommunity(communityData, isJoined);
               }}
+              isLoading={loading}
             >
               {isJoined ? "Sair" : "Unir-se"}
             </Button>
