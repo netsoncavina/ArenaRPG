@@ -7,7 +7,14 @@ import {
 } from "../atoms/communitiesAtom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, firestore } from "../firebase/clientApp";
-import { collection, getDocs } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDocs,
+  increment,
+  writeBatch,
+} from "firebase/firestore";
+import { write } from "fs";
 
 const useCommunityData = () => {
   const [user] = useAuthState(auth);
@@ -40,14 +47,56 @@ const useCommunityData = () => {
         ...prevState,
         mySnippets: snippets as CommunitySnippet[],
       }));
-    } catch (error) {
+    } catch (error: any) {
       console.log("getMySnippets error", error);
+      setError(error.message);
     }
     setLoading(false);
   };
 
-  const joinCommunity = (communityData: Community) => {};
-  const leaveCommunity = (communityId: string) => {};
+  const joinCommunity = async (communityData: Community) => {
+    try {
+      // Batch write
+      const batch = writeBatch(firestore);
+      const newSnippet: CommunitySnippet = {
+        communityId: communityData.id,
+        imageUrl: communityData.ImageUrl || "",
+      };
+
+      // Creating a new community snippet
+      batch.set(
+        doc(
+          firestore,
+          `users/${user?.uid}/communitySnippets`,
+          communityData.id
+        ),
+        newSnippet
+      );
+
+      // Updating the number of members (+1)
+      batch.update(doc(firestore, "communities", communityData.id), {
+        numberOfMembers: increment(1),
+      });
+
+      await batch.commit();
+
+      // Update recoil state - communityState.mySnippets
+      setCommunityStateValue((prevState) => ({
+        ...prevState,
+        mySnippets: [...prevState.mySnippets, newSnippet],
+      }));
+    } catch (error: any) {
+      console.log("joinCommunity error", error);
+      setError(error.message);
+    }
+    setLoading(false);
+  };
+  const leaveCommunity = (communityId: string) => {
+    // Batch write
+    // Creating a new community snippet
+    // Updating the number of members (+1)
+    // Update recoil state - communityState.mySnippets
+  };
 
   useEffect(() => {
     if (!user) return;
