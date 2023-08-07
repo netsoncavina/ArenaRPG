@@ -88,13 +88,13 @@ const NewPostForm: React.FC<NewPostFormProps> = ({ user }) => {
         // Update post object with file url
         await updateDoc(postDocRef, { imageUrl: downloadURL });
       }
+      // Redirect to community page
+      router.back();
     } catch (error: any) {
       console.log("Error handleCreatePost", error.message);
       setError(true);
     }
     setLoading(false);
-    // Redirect to community page
-    // router.back();
   };
 
   const onSelectImage = (event: React.ChangeEvent<HTMLInputElement>) => {
