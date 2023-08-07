@@ -74,7 +74,6 @@ const NewPostForm: React.FC<NewPostFormProps> = ({ user }) => {
       numberOfComments: 0,
       voteCount: 0,
       createdAt: serverTimestamp() as Timestamp,
-      id: "",
     };
     setLoading(true);
     // Store post in firebase
