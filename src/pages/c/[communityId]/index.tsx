@@ -6,6 +6,8 @@ import { GetServerSidePropsContext } from "next";
 import safeJsonStringify from "safe-json-stringify";
 import NotFound from "@/src/components/Community/NotFound";
 import Header from "@/src/components/Community/Header";
+import PageContent from "@/src/components/Layout/PageContent";
+import CreatePostLink from "@/src/components/Community/CreatePostLink";
 
 type CommunityPageProps = {
   communityData: Community;
@@ -16,6 +18,14 @@ const CommunityPage: React.FC<CommunityPageProps> = ({ communityData }) => {
   return (
     <>
       <Header communityData={communityData} />
+      <PageContent>
+        <>
+          <CreatePostLink />
+        </>
+        <>
+          <div>DIREITA</div>
+        </>
+      </PageContent>
     </>
   );
 };
