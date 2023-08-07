@@ -11,7 +11,7 @@ import {
   IoArrowRedoOutline,
   IoBookmarkOutline,
 } from "react-icons/io5";
-import { Flex, Icon, Stack, Text, Image } from "@chakra-ui/react";
+import { Flex, Icon, Stack, Text, Image, Skeleton } from "@chakra-ui/react";
 import moment from "moment";
 import "moment/locale/pt-br";
 
@@ -32,6 +32,7 @@ const PostItem: React.FC<PostItemProps> = ({
   onDeletePost,
   onSelectPost,
 }) => {
+  const [loadingImage, setLoadingImage] = React.useState(true);
   return (
     <Flex
       border="1px solid"
@@ -90,7 +91,16 @@ const PostItem: React.FC<PostItemProps> = ({
           <Text fontSize="10pt">{post.body}</Text>
           {post.imageUrl && (
             <Flex justify="center" align="center" p={2}>
-              <Image src={post.imageUrl} maxHeight="460px" alt="Post image" />
+              {loadingImage && (
+                <Skeleton height="200px" width="100%" borderRadius={4} />
+              )}
+              <Image
+                src={post.imageUrl}
+                maxHeight="460px"
+                alt="Post image"
+                display={loadingImage ? "none" : "unset"}
+                onLoad={() => setLoadingImage(false)}
+              />
             </Flex>
           )}
         </Stack>
