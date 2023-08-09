@@ -104,7 +104,7 @@ const PostItem: React.FC<PostItemProps> = ({
         />
       </Flex>
       <Flex direction="column" width="100%">
-        {true && (
+        {error && (
           <Alert status="error">
             <AlertIcon />
             <Text mr={2}>Erro na exclusão do post</Text>
