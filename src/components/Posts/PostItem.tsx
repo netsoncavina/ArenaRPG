@@ -19,6 +19,8 @@ import {
   Image,
   Skeleton,
   Spinner,
+  Alert,
+  AlertIcon,
 } from "@chakra-ui/react";
 import moment from "moment";
 import "moment/locale/pt-br";
@@ -102,6 +104,12 @@ const PostItem: React.FC<PostItemProps> = ({
         />
       </Flex>
       <Flex direction="column" width="100%">
+        {true && (
+          <Alert status="error">
+            <AlertIcon />
+            <Text mr={2}>Erro na exclusão do post</Text>
+          </Alert>
+        )}
         <Stack spacing={1} p="10px">
           <Stack direction="row" align="center" spacing={0.6} fontSize="9pt">
             <Text>
