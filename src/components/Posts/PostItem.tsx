@@ -147,7 +147,9 @@ const PostItem: React.FC<PostItemProps> = ({
             cursor="pointer"
           >
             <Icon as={BsChat} fontSize={16} />
-            <Text fontSize="9pt">{post.numberOfComments}</Text>
+            <Text fontSize="9pt" padding={1}>
+              {post.numberOfComments}
+            </Text>
           </Flex>
           <Flex
             align="center"
