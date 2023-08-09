@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Post } from "@/src/atoms/postsAtom";
 import { AiOutlineDelete } from "react-icons/ai";
 import { BsChat, BsDot } from "react-icons/bs";
@@ -20,7 +20,7 @@ type PostItemProps = {
   userIsCreator: boolean;
   userVoteValue: number;
   onVote: () => {};
-  onDeletePost: () => {};
+  onDeletePost: (post: Post) => Promise<boolean>;
   onSelectPost: () => {};
 };
 
@@ -32,7 +32,22 @@ const PostItem: React.FC<PostItemProps> = ({
   onDeletePost,
   onSelectPost,
 }) => {
-  const [loadingImage, setLoadingImage] = React.useState(true);
+  const [loadingImage, setLoadingImage] = useState(true);
+  const [error, setError] = useState(false);
+
+  const handleDelete = async () => {
+    try {
+      const success = await onDeletePost(post);
+
+      if (!success) {
+        throw new Error("Não foi possível apagar o post");
+      }
+      console.log("Post apagado com sucesso");
+    } catch (error: any) {
+      setError(error.message);
+    }
+  };
+
   return (
     <Flex
       border="1px solid"
@@ -142,7 +157,7 @@ const PostItem: React.FC<PostItemProps> = ({
               borderRadius={4}
               _hover={{ bg: "gray.200" }}
               cursor="pointer"
-              onClick={onDeletePost}
+              onClick={handleDelete}
             >
               <Icon as={AiOutlineDelete} fontSize={16} />
               <Text fontSize="9pt">Apagar</Text>
