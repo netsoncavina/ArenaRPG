@@ -11,7 +11,15 @@ import {
   IoArrowRedoOutline,
   IoBookmarkOutline,
 } from "react-icons/io5";
-import { Flex, Icon, Stack, Text, Image, Skeleton } from "@chakra-ui/react";
+import {
+  Flex,
+  Icon,
+  Stack,
+  Text,
+  Image,
+  Skeleton,
+  Spinner,
+} from "@chakra-ui/react";
 import moment from "moment";
 import "moment/locale/pt-br";
 
@@ -33,9 +41,11 @@ const PostItem: React.FC<PostItemProps> = ({
   onSelectPost,
 }) => {
   const [loadingImage, setLoadingImage] = useState(true);
+  const [loadingDelete, setLoadingDelete] = useState(false);
   const [error, setError] = useState(false);
 
   const handleDelete = async () => {
+    setLoadingDelete(true);
     try {
       const success = await onDeletePost(post);
 
@@ -46,6 +56,7 @@ const PostItem: React.FC<PostItemProps> = ({
     } catch (error: any) {
       setError(error.message);
     }
+    setLoadingDelete(false);
   };
 
   return (
@@ -159,8 +170,14 @@ const PostItem: React.FC<PostItemProps> = ({
               cursor="pointer"
               onClick={handleDelete}
             >
-              <Icon as={AiOutlineDelete} fontSize={16} />
-              <Text fontSize="9pt">Apagar</Text>
+              {loadingDelete ? (
+                <Spinner size="sm" />
+              ) : (
+                <>
+                  <Icon as={AiOutlineDelete} fontSize={16} />
+                  <Text fontSize="9pt">Apagar</Text>
+                </>
+              )}
             </Flex>
           )}
         </Flex>
