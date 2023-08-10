@@ -10,6 +10,7 @@ import PageContent from "@/src/components/Layout/PageContent";
 import CreatePostLink from "@/src/components/Community/CreatePostLink";
 import Posts from "@/src/components/Posts/Posts";
 import { useSetRecoilState } from "recoil";
+import About from "@/src/components/Community/About";
 type CommunityPageProps = {
   communityData: Community;
 };
@@ -17,7 +18,9 @@ type CommunityPageProps = {
 const CommunityPage: React.FC<CommunityPageProps> = ({ communityData }) => {
   const setCommunityStateValue = useSetRecoilState(communityState);
 
-  if (!communityData) return <NotFound />;
+  if (!communityData) {
+    return <NotFound />;
+  }
 
   useEffect(() => {
     setCommunityStateValue((prev) => ({
@@ -35,7 +38,7 @@ const CommunityPage: React.FC<CommunityPageProps> = ({ communityData }) => {
           <Posts communityData={communityData} />
         </>
         <>
-          <div>DIREITA</div>
+          <About communityData={communityData} />
         </>
       </PageContent>
     </>
