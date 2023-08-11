@@ -1,5 +1,5 @@
 import React from "react";
-import { Flex, Image } from "@chakra-ui/react";
+import { Flex, Image, Link } from "@chakra-ui/react";
 import SearchInput from "./SearchInput";
 import RightContent from "./RightContent/RightContent";
 import AuthModal from "../Modal/Auth/AuthModal";
@@ -21,7 +21,13 @@ const Navbar: React.FC = () => {
         width={{ base: "40px", md: "auto" }}
         mr={{ base: 0, md: 2 }}
       >
-        <Image src="/images/ArenaRPGLogo.svg" height="44px" />
+        <Link href="/">
+          <Image
+            src="/images/ArenaRPGLogo.svg"
+            height="44px"
+            cursor="pointer"
+          />
+        </Link>
         <Image
           src="/images/ArenaRPGText.svg"
           height="44px"
