@@ -1,4 +1,4 @@
-import { Community } from "@/src/atoms/communitiesAtom";
+import { Community, communityState } from "@/src/atoms/communitiesAtom";
 import {
   Box,
   Button,
@@ -8,12 +8,20 @@ import {
   Link,
   Stack,
   Text,
+  Image,
+  Spinner
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useRef, useState } from "react";
 import { RiCakeLine } from "react-icons/ri";
 import moment from "moment";
 import "moment/locale/pt-br";
 import { useRouter } from "next/router";
+import { auth, firestore, storage } from "@/src/firebase/clientApp";
+import { useAuthState } from "react-firebase-hooks/auth";
+import useSelectFile from "@/src/hooks/useSelectFile";
+import { getDownloadURL, ref, uploadString } from "firebase/storage";
+import { doc, updateDoc } from "firebase/firestore";
+import { useSetRecoilState } from "recoil";
 
 type AboutProps = {
   communityData: Community;
@@ -21,6 +29,38 @@ type AboutProps = {
 
 const About: React.FC<AboutProps> = ({ communityData }) => {
   const router = useRouter();
+  const [user] = useAuthState(auth);
+  const selectedFileRef = useRef<HTMLInputElement>(null);
+  const {selectedFile, setSelectedFile, onSelectFile} = useSelectFile();
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const setCommunityStateValue = useSetRecoilState(communityState);
+
+  const onUpdateImage = async () => {
+    if(!selectedFile) return;
+    setUploadingImage(true);
+    try {
+      const imageRef = ref(storage, `communities/${communityData.id}/image`);
+      await uploadString(imageRef, selectedFile, "data_url")
+      const downloadUrl = await getDownloadURL(imageRef);
+      await updateDoc(doc(firestore, "communities", communityData.id), {
+        ImageUrl: downloadUrl
+      })
+
+      setCommunityStateValue((prev) => ({
+        ...prev,
+        currentCommunity: {
+          ...prev.currentCommunity,
+          ImageUrl: downloadUrl
+        } as Community
+      }))
+
+    } catch (error) {
+      console.log("onUpdateImage error", error)
+      
+    }
+    setUploadingImage(false);
+  };
+
   return (
     <Box position="sticky" top="14px">
       <Flex
@@ -70,6 +110,45 @@ const About: React.FC<AboutProps> = ({ communityData }) => {
               Criar Post
             </Button>
           </Link>
+          {
+            user?.uid === communityData.creatorId && (
+              <>
+              <Divider />
+              <Stack spacing={1} fontSize="10pt">
+                <Text fontWeight={600}>Administrador</Text>
+                <Flex align="center" justify="space-between">
+                  <Text color='blue.500' cursor="pointer" _hover={{textDecoration: 'underline'}} onClick={() => selectedFileRef.current?.click()}>Mudar imagem</Text>
+                  {communityData.ImageUrl || selectedFile ? (
+                    <Image src={selectedFile || communityData.ImageUrl} borderRadius="full" boxSize="40px" alt="imagem da comunidade"/>
+                  ) : (
+                    <Image
+                    src="/images/ArenaRPGLogo.svg"
+                    height="44px"
+                    cursor="pointer"
+                  />
+                  ) 
+                }
+                </Flex>
+                {selectedFile && (
+                  (uploadingImage ? (
+                    <Spinner />
+                  ) :(
+                  <Text cursor="pointer" onClick={onUpdateImage}>Salvar mudanças</Text>
+                  )
+                  )
+                )}
+                <input
+                id="file-upload"
+                type="file"
+                accept="image/x-png,image/gif,image/jpeg"
+                hidden
+                ref={selectedFileRef}
+                onChange={onSelectFile}
+              />
+              </Stack>
+              </>
+            )
+          }
         </Stack>
       </Flex>
     </Box>
