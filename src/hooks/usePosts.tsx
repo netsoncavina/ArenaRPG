@@ -85,11 +85,12 @@ const usePosts = () => {
         }
       }
 
-      // Update post document
-      const postRef = doc(firestore, 'posts', post.id)
-      batch.update(postRef, {voteCount: voteCount + voteChange})
-
-      await batch.commit()
+      if(postStateValue.selectedPost) {
+        setPostStateValue((prevState) => ({
+          ...prevState,
+          selectedPost: updatedPost
+        }))
+      }
 
       // Update post state
       const postIndex = updatedPosts.findIndex(item => item.id === post.id)
@@ -99,6 +100,14 @@ const usePosts = () => {
         posts: updatedPosts,
         postVotes: updatedPostVotes
       }))
+
+
+      // Update post document
+      const postRef = doc(firestore, 'posts', post.id)
+      batch.update(postRef, {voteCount: voteCount + voteChange})
+
+      await batch.commit()
+
 
     } catch (error) {
       console.log("OnVote Error: ", error);
