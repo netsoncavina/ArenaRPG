@@ -17,7 +17,8 @@ const usePosts = () => {
   const setAuthModalState = useSetRecoilState(authModalState);
 
 
-  const onVote = async (post: Post, vote: number, communityId: string) => {
+  const onVote = async (event: React.MouseEvent<SVGElement, MouseEvent>, post: Post, vote: number, communityId: string) => {
+    event.stopPropagation()
     // Check for user, if not, open auth modal
     if(!user) {
       setAuthModalState({open: true, view: 'login'})
