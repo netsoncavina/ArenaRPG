@@ -19,7 +19,7 @@ export type Post = {
 export type PostVote = {
   id: string, 
   postId: string,
-  CommunityId: string,
+  communityId: string,
   voteValue: number,
 }
 
