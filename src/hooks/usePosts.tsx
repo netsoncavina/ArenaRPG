@@ -1,20 +1,26 @@
 import React, { useEffect } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { Post, PostVote, postState } from "../atoms/postsAtom";
 import { auth, firestore, storage } from "../firebase/clientApp";
 import { ref, deleteObject } from "firebase/storage";
 import { collection, deleteDoc, doc, getDocs, query, where, writeBatch } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { communityState } from "../atoms/communitiesAtom";
+import { authModalState } from "../atoms/authModalAtom";
 
 const usePosts = () => {
   const [user] = useAuthState(auth)
   const [postStateValue, setPostStateValue] = useRecoilState(postState);
   const currentCommunity = useRecoilValue(communityState).currentCommunity
+  const setAuthModalState = useSetRecoilState(authModalState);
 
 
   const onVote = async (post: Post, vote: number, communityId: string) => {
     // Check for user, if not, open auth modal
+    if(!user) {
+      setAuthModalState({open: true, view: 'login'})
+      return
+    }
     try {
       const {voteCount} = post;
       const existingVote = postStateValue.postVotes.find(
@@ -133,6 +139,16 @@ const usePosts = () => {
     if (!user || !currentCommunity) return
     getCommunityPostVotes(currentCommunity.id)
   }, [user, currentCommunity])
+
+  useEffect(() => {
+    if (!user) {
+      setPostStateValue((prevState) => ({
+        ...prevState,
+        postVotes: []
+      }))
+    }
+  },[user])
+
 
   return {
     postStateValue,
