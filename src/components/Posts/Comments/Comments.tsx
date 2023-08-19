@@ -1,5 +1,5 @@
 import { Post, postState } from '@/src/atoms/postsAtom';
-import { Box, Flex,Text } from '@chakra-ui/react';
+import { Box, Flex,Stack,Text } from '@chakra-ui/react';
 import { User } from 'firebase/auth';
 import React, { useState } from 'react';
 import CommentInput from './CommentInput';
@@ -7,23 +7,13 @@ import { write } from 'fs';
 import { firestore } from '@/src/firebase/clientApp';
 import { Timestamp, collection, doc, increment, serverTimestamp, writeBatch } from 'firebase/firestore';
 import { useSetRecoilState } from 'recoil';
+import CommentItem, {Comment} from './CommentItem'
 
 type CommentsProps = {
     user: User,
     selectedPost: Post | null,
     communityId: string
 };
-
-export type Comment = {
-    id: string,
-    creatorId: string,
-    creatorDisplayText: string,
-    communityId: string,
-    postId: string,
-    postTitle: string,
-    text: string,
-    createdAt: Timestamp,
-}
 
 const Comments:React.FC<CommentsProps> = ({user, selectedPost, communityId}) => {
 
@@ -51,6 +41,9 @@ const Comments:React.FC<CommentsProps> = ({user, selectedPost, communityId}) => 
             }
 
             batch.set(commentDocRef, newComment)
+
+            newComment.createdAt = { seconds: Date.now() / 1000} as Timestamp
+
             const postDocRef = doc(firestore, 'posts', selectedPost?.id!)
             batch.update(postDocRef, {
                 numberOfComments: increment(1)
@@ -95,6 +88,18 @@ const Comments:React.FC<CommentsProps> = ({user, selectedPost, communityId}) => 
                 onCreateComment={onCreateComment}
                 />
             </Flex>
+            <Stack spacing={6}>
+                {comments.map((comment) => (
+                    <CommentItem 
+                    key={comment.id}
+                    comment={comment}
+                    onDeleteComment={onDeleteComment}
+                    loadingDelete={false}
+                    userId={user.uid}
+                    />
+                ))    
+                }
+            </Stack>
         </Box>
     )
 }
