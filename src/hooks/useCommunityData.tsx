@@ -72,6 +72,7 @@ const useCommunityData = () => {
       const newSnippet: CommunitySnippet = {
         communityId: community.id,
         imageUrl: community.ImageUrl || "",
+        isModerator: user?.uid === community.creatorId,
       };
 
       // Creating a new community snippet
@@ -136,15 +137,15 @@ const useCommunityData = () => {
 
       setCommunityStateValue((prevState) => ({
         ...prevState,
-        currentCommunity: { 
-          id: communityDoc.id, 
-          ...communityDoc.data() } as Community,
+        currentCommunity: {
+          id: communityDoc.id,
+          ...communityDoc.data(),
+        } as Community,
       }));
-
     } catch (error) {
-      console.log('getCommunityData error', error)
+      console.log("getCommunityData error", error);
     }
-  }
+  };
 
   useEffect(() => {
     if (!user) {
@@ -158,12 +159,12 @@ const useCommunityData = () => {
   }, [user]);
 
   useEffect(() => {
-    const {communityId} = router.query
+    const { communityId } = router.query;
 
-    if(communityId && !communityStateValue.currentCommunity) {
-      getCommunityData(communityId as string)
+    if (communityId && !communityStateValue.currentCommunity) {
+      getCommunityData(communityId as string);
     }
-  }, [router.query, communityStateValue.currentCommunity])
+  }, [router.query, communityStateValue.currentCommunity]);
 
   return {
     communityStateValue,
