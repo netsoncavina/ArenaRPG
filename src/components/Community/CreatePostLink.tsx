@@ -1,6 +1,5 @@
 import { authModalState } from "@/src/atoms/authModalAtom";
 import { auth } from "@/src/firebase/clientApp";
-import useDirectory from "@/src/hooks/useDirectory";
 import { Flex, Icon, Input } from "@chakra-ui/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -10,7 +9,7 @@ import { BsLink45Deg } from "react-icons/bs";
 import { FaReddit } from "react-icons/fa";
 import { IoImageOutline } from "react-icons/io5";
 import { useSetRecoilState } from "recoil";
-// import useDirectory from "../../hooks/useDirectory";
+import useDirectory from "../../hooks/useDirectory";
 
 type CreatePostProps = {};
 
