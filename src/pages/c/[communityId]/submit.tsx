@@ -12,17 +12,24 @@ import useCommunityData from "@/src/hooks/useCommunityData";
 
 const SubmitPostPage: React.FC = () => {
   const [user] = useAuthState(auth);
- const {communityStateValue} = useCommunityData()
+  const { communityStateValue } = useCommunityData();
   return (
     <PageContent>
       <>
         <Box p="14px 0px" borderBottom="1px solid" borderColor="white">
           <Text>Criar Post</Text>
         </Box>
-        {user && <NewPostForm user={user} />}
+        {user && (
+          <NewPostForm
+            user={user}
+            communityImageUrl={communityStateValue.currentCommunity?.ImageUrl}
+          />
+        )}
       </>
       <>
-        {communityStateValue.currentCommunity && <About communityData={communityStateValue.currentCommunity} />}
+        {communityStateValue.currentCommunity && (
+          <About communityData={communityStateValue.currentCommunity} />
+        )}
       </>
     </PageContent>
   );
