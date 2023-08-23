@@ -22,6 +22,7 @@ import useSelectFile from "@/src/hooks/useSelectFile";
 
 type NewPostFormProps = {
   user: User;
+  communityImageUrl?: string;
 };
 
 const formTabs: TabItemType[] = [
@@ -52,14 +53,17 @@ export type TabItemType = {
   icon: typeof Icon.arguments;
 };
 
-const NewPostForm: React.FC<NewPostFormProps> = ({ user }) => {
+const NewPostForm: React.FC<NewPostFormProps> = ({
+  user,
+  communityImageUrl,
+}) => {
   const router = useRouter();
   const [selectedTab, setSelectedTab] = useState("Post");
   const [textInputs, setTextInputs] = useState({
     title: "",
     body: "",
   });
-  const {selectedFile, setSelectedFile, onSelectFile} = useSelectFile();
+  const { selectedFile, setSelectedFile, onSelectFile } = useSelectFile();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
@@ -67,8 +71,8 @@ const NewPostForm: React.FC<NewPostFormProps> = ({ user }) => {
     const { communityId } = router.query;
     // Create new post object => type Post
     const newPost: Post = {
-      // id: "",
       communityId: communityId as string,
+      communityImageUrl: communityImageUrl || "",
       creatorId: user.uid,
       creatorDisplayName: user.email!.split("@")[0],
       title: textInputs.title,
@@ -98,8 +102,6 @@ const NewPostForm: React.FC<NewPostFormProps> = ({ user }) => {
     }
     setLoading(false);
   };
-
-
 
   const onTextChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
