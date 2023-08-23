@@ -42,6 +42,7 @@ const Directory: React.FC = () => {
                 borderRadius="full"
                 boxSize="24px"
                 mr={2}
+                alt="imagem da comunidade"
               />
             ) : (
               <Icon

@@ -22,7 +22,11 @@ const ResetPassword: React.FC = () => {
   return (
     <Flex direction="column" alignItems="center" width="100%">
       {/* <Icon as={BsReddit} color="brand.100" fontSize={40} mb={2} /> */}
-      <Image src="/images/ArenaRPGLogo.svg" height="100px" />
+      <Image
+        src="/images/ArenaRPGLogo.svg"
+        height="100px"
+        alt="Arena RPG Logo"
+      />
 
       <Text fontWeight={700} mb={2}>
         Redefina sua senha

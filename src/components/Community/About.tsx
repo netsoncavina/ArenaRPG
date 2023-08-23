@@ -9,7 +9,7 @@ import {
   Stack,
   Text,
   Image,
-  Spinner
+  Spinner,
 } from "@chakra-ui/react";
 import React, { useRef, useState } from "react";
 import { RiCakeLine } from "react-icons/ri";
@@ -30,32 +30,30 @@ type AboutProps = {
 const About: React.FC<AboutProps> = ({ communityData }) => {
   const [user] = useAuthState(auth);
   const selectedFileRef = useRef<HTMLInputElement>(null);
-  const {selectedFile, setSelectedFile, onSelectFile} = useSelectFile();
+  const { selectedFile, setSelectedFile, onSelectFile } = useSelectFile();
   const [uploadingImage, setUploadingImage] = useState(false);
   const setCommunityStateValue = useSetRecoilState(communityState);
 
   const onUpdateImage = async () => {
-    if(!selectedFile) return;
+    if (!selectedFile) return;
     setUploadingImage(true);
     try {
       const imageRef = ref(storage, `communities/${communityData.id}/image`);
-      await uploadString(imageRef, selectedFile, "data_url")
+      await uploadString(imageRef, selectedFile, "data_url");
       const downloadUrl = await getDownloadURL(imageRef);
       await updateDoc(doc(firestore, "communities", communityData.id), {
-        ImageUrl: downloadUrl
-      })
+        ImageUrl: downloadUrl,
+      });
 
       setCommunityStateValue((prev) => ({
         ...prev,
         currentCommunity: {
           ...prev.currentCommunity,
-          ImageUrl: downloadUrl
-        } as Community
-      }))
-
+          ImageUrl: downloadUrl,
+        } as Community,
+      }));
     } catch (error) {
-      console.log("onUpdateImage error", error)
-      
+      console.log("onUpdateImage error", error);
     }
     setUploadingImage(false);
   };
@@ -109,45 +107,55 @@ const About: React.FC<AboutProps> = ({ communityData }) => {
               Criar Post
             </Button>
           </Link>
-          {
-            user?.uid === communityData.creatorId && (
-              <>
+          {user?.uid === communityData.creatorId && (
+            <>
               <Divider />
               <Stack spacing={1} fontSize="10pt">
                 <Text fontWeight={600}>Administrador</Text>
                 <Flex align="center" justify="space-between">
-                  <Text color='blue.500' cursor="pointer" _hover={{textDecoration: 'underline'}} onClick={() => selectedFileRef.current?.click()}>Mudar imagem</Text>
+                  <Text
+                    color="blue.500"
+                    cursor="pointer"
+                    _hover={{ textDecoration: "underline" }}
+                    onClick={() => selectedFileRef.current?.click()}
+                  >
+                    Mudar imagem
+                  </Text>
                   {communityData.ImageUrl || selectedFile ? (
-                    <Image src={selectedFile || communityData.ImageUrl} borderRadius="full" boxSize="40px" alt="imagem da comunidade"/>
+                    <Image
+                      src={selectedFile || communityData.ImageUrl}
+                      borderRadius="full"
+                      boxSize="40px"
+                      alt="imagem da comunidade"
+                    />
                   ) : (
                     <Image
-                    src="/images/ArenaRPGLogo.svg"
-                    height="44px"
-                    cursor="pointer"
-                  />
-                  ) 
-                }
+                      src="/images/ArenaRPGLogo.svg"
+                      height="44px"
+                      cursor="pointer"
+                      alt="imagem da comunidade"
+                    />
+                  )}
                 </Flex>
-                {selectedFile && (
+                {selectedFile &&
                   (uploadingImage ? (
                     <Spinner />
-                  ) :(
-                  <Text cursor="pointer" onClick={onUpdateImage}>Salvar mudanças</Text>
-                  )
-                  )
-                )}
+                  ) : (
+                    <Text cursor="pointer" onClick={onUpdateImage}>
+                      Salvar mudanças
+                    </Text>
+                  ))}
                 <input
-                id="file-upload"
-                type="file"
-                accept="image/x-png,image/gif,image/jpeg"
-                hidden
-                ref={selectedFileRef}
-                onChange={onSelectFile}
-              />
+                  id="file-upload"
+                  type="file"
+                  accept="image/x-png,image/gif,image/jpeg"
+                  hidden
+                  ref={selectedFileRef}
+                  onChange={onSelectFile}
+                />
               </Stack>
-              </>
-            )
-          }
+            </>
+          )}
         </Stack>
       </Flex>
     </Box>
