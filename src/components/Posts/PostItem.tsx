@@ -21,6 +21,7 @@ import {
   Spinner,
   Alert,
   AlertIcon,
+  Link,
 } from "@chakra-ui/react";
 import moment from "moment";
 import "moment/locale/pt-br";
@@ -30,9 +31,15 @@ type PostItemProps = {
   post: Post;
   userIsCreator: boolean;
   userVoteValue?: number;
-  onVote: (event: React.MouseEvent<SVGElement, MouseEvent>, post: Post, vote: number, communityId: string) => void;
+  onVote: (
+    event: React.MouseEvent<SVGElement, MouseEvent>,
+    post: Post,
+    vote: number,
+    communityId: string
+  ) => void;
   onDeletePost: (post: Post) => Promise<boolean>;
   onSelectPost?: (post: Post) => {};
+  homePage?: boolean;
 };
 
 const PostItem: React.FC<PostItemProps> = ({
@@ -42,6 +49,7 @@ const PostItem: React.FC<PostItemProps> = ({
   onVote,
   onDeletePost,
   onSelectPost,
+  homePage,
 }) => {
   const [loadingImage, setLoadingImage] = useState(true);
   const [loadingDelete, setLoadingDelete] = useState(false);
@@ -49,7 +57,9 @@ const PostItem: React.FC<PostItemProps> = ({
   const router = useRouter();
   const singlePostPage = !onSelectPost;
 
-  const handleDelete = async (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  const handleDelete = async (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
     event.stopPropagation();
     setLoadingDelete(true);
     try {
@@ -60,8 +70,7 @@ const PostItem: React.FC<PostItemProps> = ({
       }
       console.log("Post apagado com sucesso");
 
-      if(singlePostPage) router.push(`/c/${post.communityId}`)
-      
+      if (singlePostPage) router.push(`/c/${post.communityId}`);
     } catch (error: any) {
       setError(error.message);
     }
@@ -85,8 +94,6 @@ const PostItem: React.FC<PostItemProps> = ({
         p={2}
         width="40px"
         borderRadius={singlePostPage ? "0" : "3px 0px 0px 3px"}
-        
-
       >
         <Icon
           as={
@@ -112,7 +119,7 @@ const PostItem: React.FC<PostItemProps> = ({
           cursor="pointer"
         />
       </Flex>
-      <Flex direction="column" width="100%"      >
+      <Flex direction="column" width="100%">
         {error && (
           <Alert status="error">
             <AlertIcon />
@@ -121,6 +128,30 @@ const PostItem: React.FC<PostItemProps> = ({
         )}
         <Stack spacing={1} p="10px">
           <Stack direction="row" align="center" spacing={0.6} fontSize="9pt">
+            {homePage && (
+              <>
+                {post.communityImageURL ? (
+                  <Image
+                    src={post.communityImageURL}
+                    height="20px"
+                    width="20px"
+                    borderRadius={4}
+                  />
+                ) : (
+                  <Icon as={FaReddit} fontSize={16} />
+                )}
+                <Link href={`/c/${post.communityId}`}>
+                  <Text
+                    fontWeight={700}
+                    _hover={{ textDecoration: "underline" }}
+                    onClick={(event) => event.stopPropagation()}
+                  >
+                    c/{post.communityId}
+                  </Text>
+                </Link>
+                <Icon as={BsDot} fontSize={8} color="gray.500" />
+              </>
+            )}
             <Text>
               Postado por u/{post.creatorDisplayName}{" "}
               {moment(new Date(post.createdAt?.seconds * 1000))
