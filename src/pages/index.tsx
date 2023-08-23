@@ -117,6 +117,13 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     if (!user && !loadingUser) buildNoUserHomeFeed();
+
+    return () => {
+      setPostStateValue((prevState) => ({
+        ...prevState,
+        postVotes: [],
+      }));
+    };
   }, [user, loadingUser]);
 
   useEffect(() => {
