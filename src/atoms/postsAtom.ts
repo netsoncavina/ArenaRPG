@@ -1,4 +1,4 @@
-import { Community } from '@/src/atoms/communitiesAtom';
+import { Community } from "@/src/atoms/communitiesAtom";
 import { Timestamp } from "firebase/firestore";
 import { atom } from "recoil";
 
@@ -12,21 +12,21 @@ export type Post = {
   numberOfComments: number;
   voteCount: number;
   imageUrl?: string;
-  communityImageURL?: string;
+  communityImageUrl?: string;
   createdAt: Timestamp;
 };
 
 export type PostVote = {
-  id: string, 
-  postId: string,
-  communityId: string,
-  voteValue: number,
-}
+  id: string;
+  postId: string;
+  communityId: string;
+  voteValue: number;
+};
 
 interface PostState {
   selectedPost: Post | null;
   posts: Post[];
-  postVotes : PostVote[];
+  postVotes: PostVote[];
 }
 
 const defaultPostState: PostState = {
