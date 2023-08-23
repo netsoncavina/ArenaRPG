@@ -31,6 +31,8 @@ import {
   setDoc,
 } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { useRouter } from "next/router";
+import useDirectory from "@/src/hooks/useDirectory";
 
 type CreateCommunityModalProps = {
   open: boolean;
@@ -47,6 +49,8 @@ const CreateCommunityModal: React.FC<CreateCommunityModalProps> = ({
   const [communityType, setCommunityType] = useState("public");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const { toggleMenuOpen } = useDirectory();
 
   const handleCommunityNameChange = (
     e: React.ChangeEvent<HTMLInputElement>
@@ -102,6 +106,9 @@ const CreateCommunityModal: React.FC<CreateCommunityModalProps> = ({
           }
         );
       });
+      handleClose();
+      toggleMenuOpen();
+      router.push(`/c/${communityName}`);
     } catch (error: any) {
       console.error("handleCreateCommunity error: ", error);
       setError(error.message);
