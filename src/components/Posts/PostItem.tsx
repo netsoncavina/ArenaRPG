@@ -130,9 +130,9 @@ const PostItem: React.FC<PostItemProps> = ({
           <Stack direction="row" align="center" spacing={0.6} fontSize="9pt">
             {homePage && (
               <>
-                {post.communityImageURL ? (
+                {post.communityImageUrl ? (
                   <Image
-                    src={post.communityImageURL}
+                    src={post.communityImageUrl}
                     height="20px"
                     width="20px"
                     borderRadius={4}
