@@ -12,6 +12,9 @@ export const theme = extendTheme({
       200: "#FF3C00",
       300: "#FF3C00",
     },
+    // Paleta de cores do projeto
+    primary: "#b02b2e",
+    secondary: "#1e1f24",
   },
   fonts: {
     body: "Open Sans, sans-serif",
@@ -19,7 +22,7 @@ export const theme = extendTheme({
   styles: {
     global: () => ({
       body: {
-        bg: "gray.200",
+        bg: "#141519",
       },
     }),
   },
