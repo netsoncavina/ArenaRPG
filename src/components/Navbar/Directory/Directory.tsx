@@ -22,6 +22,8 @@ const Directory: React.FC = () => {
         cursor={"pointer"}
         padding="0px 6px"
         borderRadius={4}
+        outline="1px solid"
+        outlineColor="primary"
         mr={2}
         ml={{ base: 0, md: 2 }}
         _hover={{ outline: "1px solid", outlineColor: "gray.200" }}
@@ -32,7 +34,7 @@ const Directory: React.FC = () => {
           justify="space-between"
           width={{
             base: "auto",
-            lg: "200px",
+            lg: "150px",
           }}
         >
           <Flex align="center">
@@ -49,12 +51,13 @@ const Directory: React.FC = () => {
                 fontSize={24}
                 mr={{ base: 1, md: 2 }}
                 as={directoryState.selectedMenuItem.icon}
-                color={directoryState.selectedMenuItem.iconColor}
+                // color={directoryState.selectedMenuItem.iconColor}
+                color="primary"
               />
             )}
 
             <Flex display={{ base: "none", lg: "flex" }}>
-              <Text fontWeight={600} fontSize="10pt">
+              <Text fontWeight={600} fontSize="10pt" color="primary">
                 {directoryState.selectedMenuItem.displayText}
               </Text>
             </Flex>
