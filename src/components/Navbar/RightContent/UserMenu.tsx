@@ -42,7 +42,9 @@ const UserMenu: React.FC<UserMenuProps> = ({ user }) => {
         cursor={"pointer"}
         padding="0px 6px"
         borderRadius={4}
-        _hover={{ outline: "1px solid", outlineColor: "gray.200" }}
+        outline="1px solid"
+        outlineColor="primary"
+        _hover={{ outline: "1px solid", outlineColor: "primary" }}
       >
         <Flex align="center">
           <Flex align="center">
@@ -58,16 +60,16 @@ const UserMenu: React.FC<UserMenuProps> = ({ user }) => {
                   direction="column"
                   display={{ base: "none", md: "flex" }}
                   fontSize="8pt"
-                  align={"flex-start"}
+                  align={"center"}
                   mr={8}
                 >
-                  <Text fontWeight={700}>
+                  <Text fontWeight={700} color="primary">
                     {user?.displayName || user.email?.split("@")[0]}
                   </Text>
-                  <Flex>
+                  {/* <Flex>
                     <Icon as={IoSparkles} color="brand.100" mr={1} />
                     <Text color="gray.400">1 Karma</Text>
-                  </Flex>
+                  </Flex> */}
                 </Flex>
               </>
             ) : (
