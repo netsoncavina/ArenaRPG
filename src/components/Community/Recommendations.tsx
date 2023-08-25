@@ -48,6 +48,8 @@ const Recommendations: React.FC = () => {
 
   return (
     <Flex
+      position="sticky"
+      top="14px"
       direction="column"
       bg="white"
       borderRadius={4}
