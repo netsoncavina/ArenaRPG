@@ -39,47 +39,46 @@ const UserMenu: React.FC<UserMenuProps> = ({ user }) => {
 
   return (
     <Menu>
-      <MenuButton
-        cursor={"pointer"}
-        padding="0px 6px"
-        borderRadius={4}
-        outline="1px solid"
-        outlineColor="primary"
-        _hover={{ outline: "1px solid", outlineColor: "primary" }}
-      >
-        <Flex align="center">
-          <Flex align="center">
-            {user ? (
-              <>
-                <Icon
-                  fontSize={24}
-                  mr={1}
-                  color="gray.300"
-                  as={FaRedditSquare}
-                />
-                <Flex
-                  direction="column"
-                  display={{ base: "none", md: "flex" }}
-                  fontSize="8pt"
-                  align={"center"}
-                  mr={8}
-                >
-                  <Text fontWeight={700} color="primary">
-                    {user?.displayName || user.email?.split("@")[0]}
-                  </Text>
-                  {/* <Flex>
-                    <Icon as={IoSparkles} color="brand.100" mr={1} />
-                    <Text color="gray.400">1 Karma</Text>
-                  </Flex> */}
-                </Flex>
-              </>
-            ) : (
-              <Icon as={VscAccount} fontSize={24} color="gray.400" mr={1} />
-            )}
-          </Flex>
-          <ChevronDownIcon />
-        </Flex>
-      </MenuButton>
+      <>
+        {user ? (
+          <MenuButton
+            cursor={"pointer"}
+            padding="0px 6px"
+            borderRadius={4}
+            outline="1px solid"
+            outlineColor="primary"
+            _hover={{ outline: "1px solid", outlineColor: "primary" }}
+          >
+            <Flex align="center">
+              <Flex align="center">
+                {user ? (
+                  <>
+                    <Icon
+                      fontSize={24}
+                      mr={1}
+                      color="gray.300"
+                      as={FaRedditSquare}
+                    />
+                    <Flex
+                      direction="column"
+                      display={{ base: "none", md: "flex" }}
+                      fontSize="8pt"
+                      align={"center"}
+                      mr={8}
+                    >
+                      <Text fontWeight={700} color="primary">
+                        {user?.displayName || user.email?.split("@")[0]}
+                      </Text>
+                    </Flex>
+                  </>
+                ) : null}
+              </Flex>
+              <ChevronDownIcon />
+            </Flex>
+          </MenuButton>
+        ) : null}
+      </>
+
       <MenuList backgroundColor="secondary" borderColor="primary">
         {user ? (
           <Flex flexDirection="column">
