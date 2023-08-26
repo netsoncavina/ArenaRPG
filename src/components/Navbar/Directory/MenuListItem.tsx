@@ -1,6 +1,6 @@
 import useDirectory from "@/src/hooks/useDirectory";
-import { MenuItem, Flex, Icon, Image } from "@chakra-ui/react";
-import React from "react";
+import { MenuItem, Flex, Icon, Image, Text } from "@chakra-ui/react";
+import React, { useState } from "react";
 import { IconType } from "react-icons";
 
 type MenuListItemProps = {
@@ -19,11 +19,17 @@ const MenuListItem: React.FC<MenuListItemProps> = ({
   imageUrl,
 }) => {
   const { onSelectMenuItem } = useDirectory();
+  const [isHovered, setIsHovered] = useState(false);
   return (
     <MenuItem
       width="100%"
       fontSize="10pt"
-      _hover={{ bg: "gray.100" }}
+      _hover={{
+        bg: "primary",
+      }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      backgroundColor="secondary"
       onClick={() =>
         onSelectMenuItem({ displayText, link, icon, iconColor, imageUrl })
       }
@@ -40,7 +46,7 @@ const MenuListItem: React.FC<MenuListItemProps> = ({
         ) : (
           <Icon as={icon} fontSize={20} mr={2} color={iconColor} />
         )}
-        {displayText}
+        <Text color={isHovered ? "black" : "white"}>{displayText}</Text>
       </Flex>
     </MenuItem>
   );

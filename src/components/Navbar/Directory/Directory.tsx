@@ -65,7 +65,7 @@ const Directory: React.FC = () => {
           <ChevronDownIcon />
         </Flex>
       </MenuButton>
-      <MenuList>
+      <MenuList backgroundColor="secondary" borderColor="primary">
         <Communities />
       </MenuList>
     </Menu>

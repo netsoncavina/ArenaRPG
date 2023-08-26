@@ -11,9 +11,10 @@ type CommunitiesProps = {};
 
 const Communities: React.FC<CommunitiesProps> = () => {
   const [open, setOpen] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   const mySnippets = useRecoilValue(communityState).mySnippets;
   return (
-    <>
+    <Flex direction="column" backgroundColor="secondary">
       <CreateCommunityModal open={open} handleClose={() => setOpen(false)} />
       <Box mt={3} mb={4}>
         <Text pl={3} mb={1} fontSize="7pt" fontWeight={500} color="gray.500">
@@ -40,13 +41,16 @@ const Communities: React.FC<CommunitiesProps> = () => {
           width="100%"
           fontSize="10pt"
           _hover={{
-            bg: "gray.100",
+            bg: "primary",
           }}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          backgroundColor="secondary"
           onClick={() => setOpen(true)}
         >
           <Flex align="center">
-            <Icon fontSize={20} mr={2} as={GrAdd} />
-            Criar Comunidade
+            <Icon fontSize={20} mr={2} as={GrAdd} color="red.500" />
+            <Text color={isHovered ? "black" : "white"}>Criar Comunidade</Text>
           </Flex>
         </MenuItem>
         {mySnippets.map((snippet) => (
@@ -60,7 +64,7 @@ const Communities: React.FC<CommunitiesProps> = () => {
           />
         ))}
       </Box>
-    </>
+    </Flex>
   );
 };
 export default Communities;
