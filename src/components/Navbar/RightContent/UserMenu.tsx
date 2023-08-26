@@ -8,6 +8,7 @@ import {
   Flex,
   MenuDivider,
   Text,
+  Divider,
 } from "@chakra-ui/react";
 import { User, signOut } from "firebase/auth";
 import { FaRedditSquare } from "react-icons/fa";
@@ -79,30 +80,34 @@ const UserMenu: React.FC<UserMenuProps> = ({ user }) => {
           <ChevronDownIcon />
         </Flex>
       </MenuButton>
-      <MenuList>
+      <MenuList backgroundColor="secondary" borderColor="primary">
         {user ? (
-          <>
+          <Flex flexDirection="column">
             <MenuItem
               fontSize="10pt"
               fontWeight={700}
               _hover={{
-                bg: "blue.500",
+                bg: "primary",
                 color: "white",
               }}
+              color={"primary"}
+              background={"secondary"}
             >
               <Flex align="center">
                 <Icon fontSize={20} mr={2} as={CgProfile} />
                 Perfil
               </Flex>
             </MenuItem>
-            <MenuDivider />
+            <MenuDivider borderColor="primary" />
             <MenuItem
               fontSize="10pt"
               fontWeight={700}
               _hover={{
-                bg: "blue.500",
+                bg: "primary",
                 color: "white",
               }}
+              color={"primary"}
+              background={"secondary"}
               onClick={() => {
                 logout();
               }}
@@ -112,7 +117,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ user }) => {
                 Sair
               </Flex>
             </MenuItem>
-          </>
+          </Flex>
         ) : (
           <>
             <MenuItem
