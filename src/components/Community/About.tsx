@@ -63,7 +63,7 @@ const About: React.FC<AboutProps> = ({ communityData }) => {
       <Flex
         justify="space-between"
         align="center"
-        bg="blue.400"
+        bg="primary"
         color="white"
         p={3}
         borderRadius="4px 4px 0px 0px"
@@ -72,14 +72,21 @@ const About: React.FC<AboutProps> = ({ communityData }) => {
           Sobre a comunidade
         </Text>
       </Flex>
-      <Flex direction="column" p={3} bg="white" borderRadius="0px 0px 4px 4px">
+      <Flex
+        direction="column"
+        p={3}
+        bg="secondary"
+        borderRadius="0px 0px 4px 4px"
+      >
         <Stack>
           <Flex width="100%" p={2} fontSize="10pt" fontWeight={700}>
-            <Flex direction="column" flexGrow={1}>
+            <Flex direction="column" flexGrow={1} color="white">
               <Text>{communityData.numberOfMembers.toLocaleString()}</Text>
-              <Text>Membros</Text>
+              <Text>
+                {communityData.numberOfMembers > 1 ? "Membros" : "Membro"}
+              </Text>
             </Flex>
-            <Flex direction="column" flexGrow={1}>
+            <Flex direction="column" flexGrow={1} color="white">
               <Text>10</Text>
               <Text>Online</Text>
             </Flex>
@@ -91,6 +98,7 @@ const About: React.FC<AboutProps> = ({ communityData }) => {
             p={1}
             fontWeight={500}
             fontSize="10pt"
+            color="white"
           >
             <Icon as={RiCakeLine} fontSize={18} mr={2} />
             {communityData.createdAt && (
@@ -102,8 +110,13 @@ const About: React.FC<AboutProps> = ({ communityData }) => {
               </Text>
             )}
           </Flex>
-          <Link href={`/c/${communityData.id}/submit`}>
-            <Button mt={3} height="30px">
+          <Link
+            href={`/c/${communityData.id}/submit`}
+            justifyContent="center"
+            alignItems="center"
+            display="flex"
+          >
+            <Button mt={3} height="30px" bg="primary">
               Criar Post
             </Button>
           </Link>
