@@ -26,13 +26,21 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
             maxHeight="400px"
           />
           <Stack direction="row" mt={4}>
-            <Button height={"28px"} onClick={() => setSelectedFile("")}>
+            <Button
+              height={"28px"}
+              onClick={() => setSelectedFile("")}
+              backgroundColor="primary"
+              _hover={{ backgroundColor: "primary_hover" }}
+            >
               Cancelar
             </Button>
             <Button
               variant={"outline"}
               height={"28px"}
               onClick={() => setSelectedTab("Post")}
+              borderColor={"primary"}
+              color={"primary"}
+              _hover={{ borderColor: "primary_hover", color: "primary_hover" }}
             >
               Postar
             </Button>
@@ -49,9 +57,11 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
           width="100%"
         >
           <Button
-            variant={"outline"}
             height={"28px"}
             onClick={() => selectedFileRef.current?.click()}
+            backgroundColor="primary"
+            _hover={{ backgroundColor: "primary_hover" }}
+            color="white"
           >
             Upload
           </Button>

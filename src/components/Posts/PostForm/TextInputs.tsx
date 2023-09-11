@@ -28,13 +28,14 @@ const TextInputs: React.FC<TextInputsProps> = ({
         placeholder="Titulo"
         fontSize="10pt"
         borderRadius={4}
+        borderColor="primary"
         _placeholder={{ color: "gray.500" }}
         _focus={{
           outline: "none",
           bg: "white",
           border: "1px solid ",
-          borderColor: "black",
         }}
+        _hover={{ borderColor: "primary_hover" }}
       />
       <Textarea
         name="body"
@@ -44,6 +45,7 @@ const TextInputs: React.FC<TextInputsProps> = ({
         height="100px"
         fontSize="10pt"
         borderRadius={4}
+        borderColor="primary"
         _placeholder={{ color: "gray.500" }}
         _focus={{
           outline: "none",
@@ -51,11 +53,14 @@ const TextInputs: React.FC<TextInputsProps> = ({
           border: "1px solid ",
           borderColor: "black",
         }}
+        _hover={{ borderColor: "primary_hover" }}
       />
-      <Flex justify="flex-end">
+      <Flex justify="center">
         <Button
           height="34px"
           padding="0px 30px"
+          backgroundColor="primary"
+          _hover={{ bg: "primary_hover" }}
           disabled={!textInputs.title}
           isLoading={loading}
           onClick={handleCreatePost}

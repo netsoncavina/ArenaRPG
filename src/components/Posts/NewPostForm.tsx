@@ -34,18 +34,19 @@ const formTabs: TabItemType[] = [
     title: "Images & Video",
     icon: IoImageOutline,
   },
-  {
-    title: "Link",
-    icon: BsLink45Deg,
-  },
-  {
-    title: "Poll",
-    icon: BiPoll,
-  },
-  {
-    title: "Talk",
-    icon: BsMic,
-  },
+  // },
+  // {
+  //   title: "Link",
+  //   icon: BsLink45Deg,
+  // },
+  // {
+  //   title: "Poll",
+  //   icon: BiPoll,
+  // },
+  // {
+  //   title: "Talk",
+  //   icon: BsMic,
+  // },
 ];
 
 export type TabItemType = {
@@ -113,7 +114,14 @@ const NewPostForm: React.FC<NewPostFormProps> = ({
   };
 
   return (
-    <Flex direction="column" bg="white" borderRadius={4} mt={2}>
+    <Flex
+      direction="column"
+      bg="secondary"
+      borderRadius={4}
+      mt={2}
+      borderColor="primary"
+      borderWidth={1}
+    >
       <Flex width="100%">
         {formTabs.map((item, index) => (
           <>
