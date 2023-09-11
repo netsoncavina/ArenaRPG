@@ -14,6 +14,7 @@ export const theme = extendTheme({
     },
     // Paleta de cores do projeto
     primary: "#b02b2e",
+    primary_hover: "#fa3940",
     secondary: "#1e1f24",
   },
   fonts: {
