@@ -51,10 +51,10 @@ const Recommendations: React.FC = () => {
       position="sticky"
       top="14px"
       direction="column"
-      bg="white"
+      bg="secondary"
       borderRadius={4}
       border="1px solid"
-      borderColor="gray.300"
+      borderColor="primary"
     >
       <Flex
         align="flex-end"
@@ -63,12 +63,12 @@ const Recommendations: React.FC = () => {
         height="70px"
         borderRadius="4px 4px 0px 0px"
         fontWeight={700}
-        bgImage="url(/images/recCommsArt.png)"
+        bgImage="url(/images/top_comunities.jpg)"
         backgroundSize="cover"
         bgGradient="linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75)),
-        url('images/recCommsArt.png')"
+        url('images/top_comunities.jpg')"
       >
-        Top Communities
+        Principais comunidades
       </Flex>
       <Flex direction="column">
         {loading ? (
@@ -99,12 +99,14 @@ const Recommendations: React.FC = () => {
                     align="center"
                     fontSize="10pt"
                     borderBottom="1px solid"
-                    borderColor="gray.200"
+                    borderColor="primary"
                     p="10px 12px"
                   >
                     <Flex width="80%" align="center">
                       <Flex width="15%">
-                        <Text>{index + 1}</Text>
+                        <Text color="primary" fontSize="12pt" fontWeight={700}>
+                          {index + 1}
+                        </Text>
                       </Flex>
                       <Flex align="center" width="80%">
                         {item.ImageUrl ? (
@@ -116,18 +118,30 @@ const Recommendations: React.FC = () => {
                             alt="imagem da comunidade"
                           />
                         ) : (
-                          <Icon
-                            as={FaReddit}
-                            fontSize={30}
-                            color="brand.100"
+                          <Flex
+                            borderRadius="full"
+                            borderColor="primary"
+                            border="1px solid"
+                            boxSize="28px"
                             mr={2}
-                          />
+                            bg="white"
+                            align="center"
+                            justify="center"
+                          >
+                            <Image
+                              src="/images/arena_rpg_icone.png"
+                              height="30px"
+
+                              // mr={1}
+                            />
+                          </Flex>
                         )}
                         <span
                           style={{
                             whiteSpace: "nowrap",
                             overflow: "hidden",
                             textOverflow: "ellipsis",
+                            color: "white",
                           }}
                         >
                           {`r/${item.id}`}
@@ -137,14 +151,29 @@ const Recommendations: React.FC = () => {
                     <Box position="absolute" right="10px">
                       <Button
                         height="22px"
-                        fontSize="8pt"
+                        fontSize="7pt"
                         variant={isJoined ? "outline" : "solid"}
+                        backgroundColor={isJoined ? "secondary" : "primary"}
+                        borderColor={isJoined ? "primary" : "primary"}
+                        color={isJoined ? "primary" : "white"}
+                        _hover={
+                          isJoined
+                            ? {
+                                backgroundColor: "primary",
+                                color: "white",
+                                // borderColor: "primary_hover",
+                              }
+                            : {
+                                backgroundColor: "primary_hover",
+                                color: "white",
+                              }
+                        }
                         onClick={(event) => {
                           event.stopPropagation();
                           onJoinOrLeaveCommunity(item, isJoined);
                         }}
                       >
-                        {isJoined ? "Joined" : "Join"}
+                        {isJoined ? "Membro" : "Entrar"}
                       </Button>
                     </Box>
                   </Flex>
@@ -152,8 +181,15 @@ const Recommendations: React.FC = () => {
               );
             })}
             <Box p="10px 20px">
-              <Button height="30px" width="100%">
-                View All
+              <Button
+                height="30px"
+                width="100%"
+                backgroundColor="primary"
+                _hover={{
+                  backgroundColor: "primary_hover",
+                }}
+              >
+                Ver todas
               </Button>
             </Box>
           </>
