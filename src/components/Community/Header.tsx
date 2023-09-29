@@ -16,11 +16,18 @@ const Header: React.FC<HeaderProps> = ({ communityData }) => {
   );
   return (
     <Flex direction="column" width="100%" height="146px">
-      <Box height="50%" bg="blue.400" />
-      <Flex justify="center" bg="white" flexGrow={1}>
+      <Box height="50%" bg="primary" />
+      <Flex
+        justify="center"
+        bg="secondary"
+        flexGrow={1}
+        border="1px solid"
+        borderColor="primary"
+      >
         <Flex width="95%" maxWidth="860px">
           {communityStateValue.currentCommunity?.ImageUrl ? (
-            <Image src={communityStateValue.currentCommunity.ImageUrl}
+            <Image
+              src={communityStateValue.currentCommunity.ImageUrl}
               borderRadius="full"
               boxSize="66px"
               alt="Imagem da comunidade"
@@ -42,7 +49,7 @@ const Header: React.FC<HeaderProps> = ({ communityData }) => {
           )}
           <Flex padding="10px 16px">
             <Flex direction="column" mr={6}>
-              <Text fontWeight={600} fontSize="16pt">
+              <Text fontWeight={600} fontSize="16pt" color="primary">
                 {communityData.id}
               </Text>
               <Text fontWeight={600} fontSize="10pt" color="gray.400">
@@ -54,6 +61,15 @@ const Header: React.FC<HeaderProps> = ({ communityData }) => {
               height="30px"
               pr={6}
               pl={6}
+              color={isJoined ? "primary" : "secondary"}
+              borderColor={isJoined ? "primary" : "white"}
+              bg={isJoined ? "secondary" : "primary"}
+              _hover={{
+                backgroundColor: isJoined ? "secondary" : "primary_hover",
+                color: isJoined ? "primary_hover" : "white",
+                borderColor: isJoined ? "primary_hover" : "white",
+                border: isJoined ? "2px solid" : "none",
+              }}
               onClick={() => {
                 onJoinOrLeaveCommunity(communityData, isJoined);
               }}
