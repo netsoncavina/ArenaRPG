@@ -81,7 +81,7 @@ const PostItem: React.FC<PostItemProps> = ({
     <Flex
       border="1px solid"
       bg="secondary"
-      borderColor={singlePostPage ? "white" : "primary"}
+      borderColor={singlePostPage ? "none" : "primary"}
       borderRadius={singlePostPage ? "4px 4px 0px 0px" : "4px"}
       _hover={{ borderColor: singlePostPage ? "none" : "primary_hover" }}
       cursor={singlePostPage ? "unset" : "pointer"}

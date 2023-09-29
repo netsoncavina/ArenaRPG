@@ -6,6 +6,7 @@ import {
   SkeletonText,
   Stack,
   Text,
+  Image,
 } from "@chakra-ui/react";
 import { User } from "firebase/auth";
 import React, { useEffect, useState } from "react";
@@ -142,7 +143,7 @@ const Comments: React.FC<CommentsProps> = ({
   }, [selectedPost]);
 
   return (
-    <Box bg="white" borderRadius="0px 0px 4px 4px" p={2}>
+    <Box bg="secondary" borderRadius="0px 0px 4px 4px" p={2}>
       <Flex
         direction="column"
         pl={10}
@@ -182,9 +183,15 @@ const Comments: React.FC<CommentsProps> = ({
                 borderColor="gray.100"
                 p={20}
               >
-                <Text fontWeight={700} opacity={0.3}>
+                <Text fontWeight={700} color="primary">
                   Nenhum comentario ainda
                 </Text>
+                <Image
+                  src="/images/sad.png"
+                  alt="Nenhum comentario ainda"
+                  width={200}
+                  height={200}
+                />
               </Flex>
             ) : (
               <>

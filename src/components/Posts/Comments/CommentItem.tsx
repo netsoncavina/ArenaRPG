@@ -39,16 +39,20 @@ const CommentItem: React.FC<CommentItemProps> = ({
       </Box>
       <Stack spacing={1}>
         <Stack direction="row" align="center" fontSize="8pt">
-          <Text fontWeight={700}>{comment.creatorDisplayText}</Text>
-          <Text color="gray.600">
+          <Text fontWeight={700} color="primary">
+            {comment.creatorDisplayText}
+          </Text>
+          <Text color="gray.400">
             {moment(new Date(comment.createdAt.seconds * 1000))
               .locale("pt-br")
               .fromNow()}
           </Text>
           {loadingDelete && <Spinner size="sm" />}
         </Stack>
-        <Text fontSize="10pt">{comment.text}</Text>
-        <Stack direction="row" align="center" cursor="pointer" color="gray.500">
+        <Text fontSize="10pt" color="gray.200">
+          {comment.text}
+        </Text>
+        <Stack direction="row" align="center" cursor="pointer" color="primary">
           <Icon as={IoArrowUpCircleOutline} />
           <Icon as={IoArrowDownCircleOutline} />
           {userId === comment.creatorId && (
@@ -58,7 +62,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
               </Text> */}
               <Text
                 fontSize="9pt"
-                _hover={{ color: "blue.500" }}
+                _hover={{ color: "primary_hover" }}
                 onClick={() => onDeleteComment(comment)}
               >
                 Excluir
