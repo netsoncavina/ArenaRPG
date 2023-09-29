@@ -116,7 +116,16 @@ const About: React.FC<AboutProps> = ({ communityData }) => {
             alignItems="center"
             display="flex"
           >
-            <Button mt={3} height="30px" bg="primary">
+            <Button
+              mt={3}
+              height="30px"
+              bg="primary"
+              color="secondary"
+              _hover={{
+                backgroundColor: "primary_hover",
+                color: "white",
+              }}
+            >
               Criar Post
             </Button>
           </Link>
@@ -127,7 +136,7 @@ const About: React.FC<AboutProps> = ({ communityData }) => {
                 <Text fontWeight={600}>Administrador</Text>
                 <Flex align="center" justify="space-between">
                   <Text
-                    color="blue.500"
+                    color="primary"
                     cursor="pointer"
                     _hover={{ textDecoration: "underline" }}
                     onClick={() => selectedFileRef.current?.click()}
@@ -154,7 +163,11 @@ const About: React.FC<AboutProps> = ({ communityData }) => {
                   (uploadingImage ? (
                     <Spinner />
                   ) : (
-                    <Text cursor="pointer" onClick={onUpdateImage}>
+                    <Text
+                      cursor="pointer"
+                      onClick={onUpdateImage}
+                      color="primary_hover"
+                    >
                       Salvar mudanças
                     </Text>
                   ))}

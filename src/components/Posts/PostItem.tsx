@@ -219,7 +219,7 @@ const PostItem: React.FC<PostItemProps> = ({
               align="center"
               p="8px 10px"
               borderRadius={4}
-              _hover={{ bg: "gray.200" }}
+              _hover={{ color: "white" }}
               cursor="pointer"
               onClick={handleDelete}
             >
@@ -227,7 +227,7 @@ const PostItem: React.FC<PostItemProps> = ({
                 <Spinner size="sm" />
               ) : (
                 <>
-                  <Icon as={AiOutlineDelete} fontSize={16} />
+                  <Icon as={AiOutlineDelete} fontSize={20} />
                   <Text fontSize="9pt">Apagar</Text>
                 </>
               )}
