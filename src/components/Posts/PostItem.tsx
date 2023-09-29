@@ -80,17 +80,17 @@ const PostItem: React.FC<PostItemProps> = ({
   return (
     <Flex
       border="1px solid"
-      bg="white"
-      borderColor={singlePostPage ? "white" : "gray.300"}
+      bg="secondary"
+      borderColor={singlePostPage ? "white" : "primary"}
       borderRadius={singlePostPage ? "4px 4px 0px 0px" : "4px"}
-      _hover={{ borderColor: singlePostPage ? "none" : "gray.500" }}
+      _hover={{ borderColor: singlePostPage ? "none" : "primary_hover" }}
       cursor={singlePostPage ? "unset" : "pointer"}
       onClick={() => onSelectPost && onSelectPost(post)}
     >
       <Flex
         direction="column"
         align="center"
-        bg={singlePostPage ? "none" : "gray.100"}
+        bg={singlePostPage ? "none" : "secondary"}
         p={2}
         width="40px"
         borderRadius={singlePostPage ? "0" : "3px 0px 0px 3px"}
@@ -104,7 +104,7 @@ const PostItem: React.FC<PostItemProps> = ({
           onClick={(event) => onVote(event, post, 1, post.communityId)}
           cursor="pointer"
         />
-        <Text fontSize="xs" color="gray.400">
+        <Text fontSize="x" color="primary">
           {post.voteCount}
         </Text>
         <Icon
@@ -138,31 +138,34 @@ const PostItem: React.FC<PostItemProps> = ({
                     borderRadius={4}
                   />
                 ) : (
-                  <Icon as={FaReddit} fontSize={16} />
+                  <Image src="/images/arena_rpg_icone.png" height="20px" />
                 )}
                 <Link href={`/c/${post.communityId}`}>
                   <Text
                     fontWeight={700}
                     _hover={{ textDecoration: "underline" }}
                     onClick={(event) => event.stopPropagation()}
+                    color="primary"
                   >
                     c/{post.communityId}
                   </Text>
                 </Link>
-                <Icon as={BsDot} fontSize={8} color="gray.500" />
+                <Icon as={BsDot} fontSize={8} color="gray.100" />
               </>
             )}
-            <Text>
+            <Text fontWeight={700} color="gray.100">
               Postado por u/{post.creatorDisplayName}{" "}
               {moment(new Date(post.createdAt?.seconds * 1000))
                 .locale("pt-br")
                 .fromNow()}
             </Text>
           </Stack>
-          <Text fontSize="12pt" fontWeight={600}>
+          <Text fontSize="12pt" fontWeight={600} color="gray.100">
             {post.title}
           </Text>
-          <Text fontSize="10pt">{post.body}</Text>
+          <Text fontSize="10pt" color="gray.100">
+            {post.body}
+          </Text>
           {post.imageUrl && (
             <Flex justify="center" align="center" p={2}>
               {loadingImage && (
@@ -178,7 +181,7 @@ const PostItem: React.FC<PostItemProps> = ({
             </Flex>
           )}
         </Stack>
-        <Flex ml={1} mb={0.5} color="gray.500">
+        <Flex ml={1} mb={0.5} color="primary">
           <Flex
             align="center"
             p="8px 10px"
