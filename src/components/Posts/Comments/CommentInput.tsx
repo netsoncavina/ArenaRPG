@@ -27,12 +27,12 @@ const CommentInput: React.FC<CommentInputProps> = ({
     >
       {user ? (
         <>
-          <Text mb={1} color="gray.200">
-            Commente como{" "}
-            <span style={{ color: "primary" }}>
-              {user?.email?.split("@")[0]}
-            </span>
-          </Text>
+          <Flex align="center" justify="start" mb={1}>
+            <Text color="gray.200">Comente como</Text>
+            <Text paddingLeft={1} color="primary">
+              {user.displayName}
+            </Text>
+          </Flex>
           <Textarea
             value={commentText}
             onChange={(event) => setCommentText(event.target.value)}
@@ -82,7 +82,9 @@ const CommentInput: React.FC<CommentInputProps> = ({
           borderColor="primary"
           p={4}
         >
-          <Text fontWeight={600}>Faça login para comentar</Text>
+          <Text fontWeight={700} color="primary">
+            Faça login para comentar
+          </Text>
           <AuthButtons />
         </Flex>
       )}

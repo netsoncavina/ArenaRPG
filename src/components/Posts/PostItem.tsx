@@ -186,10 +186,10 @@ const PostItem: React.FC<PostItemProps> = ({
             align="center"
             p="8px 10px"
             borderRadius={4}
-            _hover={{ bg: "gray.200" }}
+            _hover={{ color: "white" }}
             cursor="pointer"
           >
-            <Icon as={BsChat} fontSize={16} />
+            <Icon as={BsChat} fontSize={20} />
             <Text fontSize="9pt" padding={1}>
               {post.numberOfComments}
             </Text>
@@ -198,20 +198,20 @@ const PostItem: React.FC<PostItemProps> = ({
             align="center"
             p="8px 10px"
             borderRadius={4}
-            _hover={{ bg: "gray.200" }}
+            _hover={{ color: "white" }}
             cursor="pointer"
           >
-            <Icon as={IoArrowRedoOutline} fontSize={16} />
+            <Icon as={IoArrowRedoOutline} fontSize={20} />
             <Text fontSize="9pt">Compartilhar</Text>
           </Flex>
           <Flex
             align="center"
             p="8px 10px"
             borderRadius={4}
-            _hover={{ bg: "gray.200" }}
+            _hover={{ color: "white" }}
             cursor="pointer"
           >
-            <Icon as={IoBookmarkOutline} fontSize={16} />
+            <Icon as={IoBookmarkOutline} fontSize={20} />
             <Text fontSize="9pt">Salvar</Text>
           </Flex>
           {userIsCreator && (
