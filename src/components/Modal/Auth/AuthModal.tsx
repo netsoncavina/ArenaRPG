@@ -39,7 +39,41 @@ const AuthModal: React.FC = () => {
     <>
       <Modal isOpen={modalState.open} onClose={handleClose}>
         <ModalOverlay />
-        {isDevolopment == "true" ? (
+        <ModalContent>
+          <ModalHeader textAlign="center">
+            {modalState.view === "login" && "Login"}
+            {modalState.view === "signup" && "Cadastro"}
+            {modalState.view === "resetPassword" && "Redefinir senha"}
+          </ModalHeader>
+          <ModalCloseButton />
+          <ModalBody
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            flexDirection="column"
+            pb={6}
+          >
+            <Flex
+              direction="column"
+              align="center"
+              justify="center"
+              width="70%"
+            >
+              {modalState.view === "login" || modalState.view === "signup" ? (
+                <>
+                  <OAuthButtons />
+                  <Text color="gray.500" fontWeight={700}>
+                    OU
+                  </Text>
+                  <AuthInputs />
+                </>
+              ) : (
+                <ResetPassword />
+              )}
+            </Flex>
+          </ModalBody>
+        </ModalContent>
+        {/* {isDevolopment == "true" ? (
           <ModalContent>
             <ModalHeader textAlign="center">
               {modalState.view === "login" && "Login"}
@@ -118,7 +152,7 @@ const AuthModal: React.FC = () => {
               </Flex>
             </ModalBody>
           </ModalContent>
-        )}
+        )} */}
       </Modal>
     </>
   );
